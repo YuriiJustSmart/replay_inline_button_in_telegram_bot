@@ -2,7 +2,7 @@ import telebot
 import random
 from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton, ReplyKeyboardMarkup
 
-TOKEN = "ТВІЙ ТОКЕН"
+TOKEN = "8074901019:AAGm-JK-34rHJAb66WqlcDWXlQ7nSi0ztns"
 bot = telebot.TeleBot(TOKEN)
 
 # --- ФАКТИ ---
@@ -115,7 +115,12 @@ def handle_buttons(message):
 
     elif message.text == "❓ Хелп":
         bot.send_message(message.chat.id, "Натисни 'Вибрати тему', щоб отримати факт 🚀", reply_markup=main_keyboard())
-
+    else:
+        bot.send_message(
+            message.chat.id,
+            "Я не зрозумів 😅 Обери кнопку 👇",
+            reply_markup=main_keyboard()
+        )
 
 # --- INLINE КНОПКИ + "ЩЕ ФАКТ" ---
 
@@ -150,12 +155,15 @@ def handle_topics(call):
     "black_holes": "🕳 Чорні діри"
     }
 
-    bot.edit_message_text(
-        f"{topic_names[topic]}\n\n🌠 {fact}",
-        chat_id=call.message.chat.id,
-        message_id=call.message.message_id,
-        reply_markup=keyboard
-    )
+    try:
+        bot.edit_message_text(
+            f"{topic_names[topic]}\n\n🌠 {fact}",
+            chat_id=call.message.chat.id,
+            message_id=call.message.message_id,
+            reply_markup=keyboard
+        )
+    except:
+        pass
 
 
 # --- ЗАПУСК ---
